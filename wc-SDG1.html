@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Cloud Example</title>
+    <style>
+        #word-cloud {
+            width: 100%;
+            height: 500px;
+            font-family: Impact, sans-serif;
+        }
+        text {
+            cursor: pointer;
+            transition: fill 0.3s ease;  
+        }
+        text:hover {
+            fill: gray; 
+        }
+    </style>
+</head>
+<body>
+    <div id="word-cloud"></div>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-cloud/build/d3.layout.cloud.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var words = [
+                {text: "Quantum Mechanics", weight: 5.56, url: "https://www.webofscience.com/wos/woscc/summary/31747aa1-104a-4540-8aa5-845df9030bd7-e43ecd4f/relevance/1"},
+                {text: "Economics", weight: 6.10, url: "https://www.webofscience.com/wos/woscc/summary/79721d29-b4b7-4647-8af0-d3051febfbed-e44085c3/relevance/1"},
+                {text: "Management", weight: 6.3, url:"https://www.webofscience.com/wos/woscc/summary/ce2e3c56-918e-4638-addb-0a3950f71b25-e440931c/relevance/1"},
+                {text: "Forestry", weight: 3.40, url:"https://www.webofscience.com/wos/woscc/summary/69a9a081-f158-4784-8781-52013e10c7e9-e4429e7b/relevance/1"},
+                {text: "Agricultural Policy", weight: 6.263, url:"https://www.webofscience.com/wos/woscc/summary/1e320fa7-81d2-409b-8f80-58760b733b90-e442a47d/relevance/1"},
+                {text: "Political Science", weight: 6.27, url:"https://www.webofscience.com/wos/woscc/summary/479cff01-9c27-4de5-b42b-53d4de613b36-e442aac8/relevance/1"},
+                {text: "Economic Theory", weight: 6.122, url:"https://www.webofscience.com/wos/woscc/summary/ee2e9371-c19c-4458-9ae3-0b0cb4c4b4e9-e442afe7/relevance/1"},
+                {text: "Anthropology", weight: 6.146, url:"https://www.webofscience.com/wos/woscc/summary/0998e546-79db-409b-b2f6-80500c04ae0c-e442b516/relevance/1"},
+                {text: "Nutrition & Dietetics", weight: 1.44, url:"https://www.webofscience.com/wos/woscc/summary/f2ca49af-dc8d-4fb7-acd3-66b5dea2db42-e442baa4/relevance/1"},
+                {text: "Philosophy", weight: 10.126, url:"https://www.webofscience.com/wos/woscc/summary/fbc828f6-d0db-4ec7-a8a4-89123a5f2697-e442bfae/relevance/1"},
+                {text: "Dairy & Animal Sciences", weight: 3.51, url:"https://www.webofscience.com/wos/woscc/summary/2b1b0971-e5c2-49f8-876a-c60d29496d3b-e442c4d4/relevance/1"},
+                {text: "Gender & Sexuality Studies", weight: 6.178, url: "https://www.webofscience.com/wos/woscc/summary/1a011171-f8fc-4b2d-a71f-545d168bf4b5-e442c9c4/relevance/1"}
+            ];
+
+            var fontSizeScale = d3.scaleLinear().domain([1, 10]).range([10, 100]);
+
+            var layout = d3.layout.cloud()
+                .size([800, 500])
+                .words(words.map(function(d) {
+                    return {text: d.text, size: fontSizeScale(d.weight), url: d.url};
+                }))
+                .padding(1)
+                .rotate(function() { return Math.random() > 0.5 ? 90 : 0; })
+                .font("Impact")
+                .fontSize(function(d) { return d.size; })
+                .on("end", draw);
+            layout.start();
+
+            function draw(words) {
+                var svg = d3.select("#word-cloud").append("svg")
+                    .attr("width", layout.size()[0])
+                    .attr("height", layout.size()[1])
+                    .append("g")
+                    .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")");
+                
+                svg.selectAll("text")
+                    .data(words)
+                    .enter().append("text")
+                    .style("font-size", function(d) { return d.size + "px"; })
+                    .style("font-family", "Impact")
+                    .attr("text-anchor", "middle")
+                    .attr("transform", function(d) {
+                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .text(function(d) { return d.text; })
+                    .on("click", function(d) { window.open(d.url); })  // click event
+                    .style("cursor", "pointer");  // mouse pointer
+            }
+        });
+    </script>
+</body>
+</html>
