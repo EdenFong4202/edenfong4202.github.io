@@ -43,20 +43,21 @@
 
             var zScale = d3.scaleLinear()
             .domain([mean - std, mean + std])
-            .range([10, 40])
+            .range([10, 25])
             .clamp(true);
 
 
             /*var fontSizeScale = d3.scaleLinear().domain([100, 220]).range([10, 25]);*/
 
             var layout = d3.layout.cloud()
-                .size([1400, 900])
+                .size([1400, 800])
                 .words(words.map(function(d) {
                     /*return {text: d.text, size: fontSizeScale(d.weight), url: d.url};*/
                     return {text: d.text, size: zScale(d.weight), url: d.url};
                 }))
-                .padding(3)
-                .rotate(function() { return Math.random() > 0.5 ? 90 : 0; })
+                .padding(1)
+                /*.rotate(function() { return Math.random() > 0.5 ? 90 : 0; })*/
+                .rotate(function() { return 0; })
                 .spiral("archimedean")
                 .font("Impact")
                 .fontSize(function(d) { return d.size; })
