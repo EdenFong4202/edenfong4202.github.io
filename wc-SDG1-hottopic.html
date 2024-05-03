@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Cloud Example</title>
+    <style>
+        #word-cloud {
+            width: 100%;
+            height: 500px;
+            font-family: Impact, sans-serif;
+        }
+        text {
+            cursor: pointer;
+            transition: fill 0.3s ease;  
+        }
+        text:hover {
+            fill: gray; 
+        }
+    </style>
+</head>
+<body>
+    <div id="word-cloud"></div>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-cloud/build/d3.layout.cloud.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var words = [
+                {text: "SOCIAL CAPITAL IN THE CREATION OF HUMAN-CAPITAL", weight: 251.000, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:001158653500007"},
+                {text: "SOME TESTS OF SPECIFICATION FOR PANEL DATA - MONTE-CARLO EVIDENCE AND AN APPLICATION TO EMPLOYMENT EQUATIONS", weight: 211.347, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000954374300001"},
+                {text: "Initial conditions and moment restrictions in dynamic panel data models", weight: 175.333, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:001138522000017"},
+                {text: "ON THE MECHANICS OF ECONOMIC-DEVELOPMENT", weight: 174.818, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000921412600001"},
+                {text: "ANOTHER LOOK AT THE INSTRUMENTAL VARIABLE ESTIMATION OF ERROR-COMPONENTS MODELS", weight: 153.975, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:A1992JV04500001"},
+                {text: "INSTITUTIONS", weight: 153.253, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000390743900022"},
+                {text: "ADVANCES IN PROSPECT-THEORY - CUMULATIVE REPRESENTATION OF UNCERTAINTY", weight: 149.018, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000467853000001"},
+                {text: "INCREASING RETURNS AND LONG-RUN GROWTH", weight: 140.356, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000268680400006"},
+                {text: "Testing for unit roots in heterogeneous panels", weight: 129.191, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000075691500005"},
+                {text: "The promise of entrepreneurship as a field of research", weight: 115.880, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000972884200001"}
+            ];
+            
+            let mean = d3.mean(words, d => d.weight);
+            let std = d3.deviation(words, d => d.weight);
+
+            var zScale = d3.scaleLinear()
+            .domain([mean - std, mean + std])
+            .range([10, 40])
+            .clamp(true);
+
+
+            /*var fontSizeScale = d3.scaleLinear().domain([100, 220]).range([10, 25]);*/
+
+            var layout = d3.layout.cloud()
+                .size([1400, 900])
+                .words(words.map(function(d) {
+                    /*return {text: d.text, size: fontSizeScale(d.weight), url: d.url};*/
+                    return {text: d.text, size: zScale(d.weight), url: d.url};
+                }))
+                .padding(3)
+                .rotate(function() { return Math.random() > 0.5 ? 90 : 0; })
+                .spiral("archimedean")
+                .font("Impact")
+                .fontSize(function(d) { return d.size; })
+                .on("end", draw);
+            layout.start();
+
+            function draw(words) {
+                var svg = d3.select("#word-cloud").append("svg")
+                    .attr("width", layout.size()[0])
+                    .attr("height", layout.size()[1])
+                    .append("g")
+                    .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")");
+                
+                svg.selectAll("text")
+                    .data(words)
+                    .enter().append("text")
+                    .style("font-size", function(d) { return d.size + "px"; })
+                    .style("font-family", "Impact")
+                    .attr("text-anchor", "middle")
+                    .attr("transform", function(d) {
+                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .text(function(d) { return d.text; })
+                    .on("click", function(d) { window.open(d.url); })  // click event
+                    .style("cursor", "pointer");  // mouse pointer
+            }
+        });
+    </script>
+</body>
+</html>
