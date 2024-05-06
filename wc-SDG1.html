@@ -43,7 +43,7 @@
             var fontSizeScale = d3.scaleLinear().domain([1, 10]).range([10, 100]);
 
             var layout = d3.layout.cloud()
-                .size([800, 500])
+                .size([1200, 800])
                 .words(words.map(function(d) {
                     return {text: d.text, size: fontSizeScale(d.weight), url: d.url};
                 }))
