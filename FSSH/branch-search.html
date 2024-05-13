@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>私立復興分館查詢示例</title>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    input[type="text"], button {
+      width: calc(50% - 10px);
+      padding: 10px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: calc(25% - 12px);
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+    <h1>私立復興中學Koha分館搜尋示例</h1>
+  <div class="form-group">
+    <input type="text" id="primarySearch" placeholder="小學部搜尋關鍵字">
+    <button onclick="search('primary')">Search</button>
+  </div>
+  <div class="form-group">
+    <input type="text" id="secondarySearch" placeholder="中學部搜尋關鍵字">
+    <button onclick="search('secondary')">Search</button>
+  </div>
+  <div class="form-group">
+    <input type="text" id="unrestrictedSearch" placeholder="不限分館搜尋關鍵字">
+    <button onclick="search('unrestricted')">Search</button>
+  </div>
+</div>
+
+<script>
+function search(type) {
+  var baseUrl = 'https://koha.sydt.com.tw/cgi-bin/koha/opac-search.pl?idx=&q=';
+  var keyword = '';
+  var url = '';
+
+  if (type === 'primary') {
+    keyword = document.getElementById('primarySearch').value;
+    url = baseUrl + keyword + '&limit=branch%3AES&weight_search=1';
+  } else if (type === 'secondary') {
+    keyword = document.getElementById('secondarySearch').value;
+    url = baseUrl + keyword + '&limit=branch%3ASS&weight_search=1';
+  } else {
+    keyword = document.getElementById('unrestrictedSearch').value;
+    url = baseUrl + keyword + '&limit=&weight_search=1';
+  }
+
+  window.location.href = url;
+}
+</script>
+</body>
+</html>
