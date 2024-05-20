@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Cloud Example</title>
+    <style>
+        #word-cloud {
+            width: 1200px;
+            height: 600px;
+            font-family: Impact, sans-serif;
+        }
+        text {
+            cursor: pointer;
+            transition: fill 0.3s ease;  
+        }
+        text:hover {
+            fill: gray; 
+        }
+    </style>
+</head>
+<body>
+    <div id="word-cloud"></div>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-cloud/build/d3.layout.cloud.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var words = [
+                {text: "The ERA5 global reanalysis", weight: 533.498, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000540214600001"},
+                {text: "METHODS FOR DIETARY FIBER, NEUTRAL DETERGENT FIBER, AND NONSTARCH POLYSACCHARIDES IN RELATION TO ANIMAL NUTRITION", weight: 507.353, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:A1991GJ36600040"},
+                {text: "TBtools: An Integrative Toolkit Developed for Interactive Analyses of Big Biological Data", weight: 348.129, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000557422800016"},
+                {text: "A general and simple method for obtaining R2 from generalized linear mixed-effects models", weight: 324.057, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000314974800004"},
+                {text: "THE INTCAL20 NORTHERN HEMISPHERE RADIOCARBON AGE CALIBRATION CURVE (0-55 CAL KBP)", weight: 320.939, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000588638500001"},
+                {text: "The NCEP/NCAR 40-year reanalysis project", weight: 315.742, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:A1996UG17600001"},
+                {text: "glmmTMB Balances Speed and Flexibility Among Packages for Zero-inflated Generalized Linear Mixed Modeling", weight: 315.111, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000423751200026"},
+                {text: "INTCAL13 AND MARINE13 RADIOCARBON AGE CALIBRATION CURVES 0-50,000 YEARS CAL BP", weight: 268.851, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000326817600002"},
+                {text: "WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas", weight: 259.433, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000412095400006"},
+                {text: "Earth beyond six of nine planetary boundaries", weight: 229.22, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:001081844700013"}
+            ];
+            
+            let mean = d3.mean(words, d => d.weight);
+            let std = d3.deviation(words, d => d.weight);
+
+            var zScale = d3.scaleLinear()
+                .domain([mean - std, mean + std])
+                .range([10, 20])
+                .clamp(true);
+
+            var layout = d3.layout.cloud()
+                .size([1200, 600])
+                .words(words.map(function(d) {
+                    return {text: d.text, size: zScale(d.weight), url: d.url};
+                }))
+                .padding(1)
+                .rotate(function() { return 0; })
+                .spiral("archimedean")
+                .font("Impact")
+                .fontSize(function(d) { return d.size; })
+                .on("end", draw);
+            layout.start();
+
+            function draw(words) {
+                var svg = d3.select("#word-cloud").append("svg")
+                    .attr("width", layout.size()[0])
+                    .attr("height", layout.size()[1])
+                    .append("g")
+                    .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")");
+                
+                svg.selectAll("text")
+                    .data(words)
+                    .enter().append("text")
+                    .style("font-size", function(d) { return d.size + "px"; })
+                    .style("font-family", "Impact")
+                    .attr("text-anchor", "middle")
+                    .attr("transform", function(d) {
+                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .text(function(d) { return d.text; })
+                    .on("click", function(d) { window.open(d.url); })
+                    .style("cursor", "pointer");
+            }
+        });
+    </script>
+</body>
+</html>
