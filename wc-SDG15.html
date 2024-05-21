@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG15 Word Cloud</title>
+    <style>
+        #word-cloud {
+            width: 1200px;
+            height: 600px;
+            font-family: Impact, sans-serif;
+        }
+        text {
+            cursor: pointer;
+            transition: fill 0.3s ease;
+        }
+        text:hover {
+            fill: gray;
+        }
+    </style>
+</head>
+<body>
+    <div id="word-cloud"></div>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-cloud/build/d3.layout.cloud.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var words = [
+                {text: "MEGA7: Molecular Evolutionary Genetics Analysis Version 7.0 for Bigger Datasets", weight: 1445.584, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000378767100018"},
+                {text: "MEGA11 Molecular Evolutionary Genetics Analysis Version 11", weight: 938.773, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000671060500025"},
+                {text: "MEGA X: Molecular Evolutionary Genetics Analysis across Computing Platforms", weight: 886.693, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000441140000027"},
+                {text: "MEGA6: Molecular Evolutionary Genetics Analysis Version 6.0", weight: 703.396, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000327793000019"},
+                {text: "Trimmomatic: a flexible trimmer for Illumina sequence data", weight: 703.132, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000340049100004"},
+                {text: "RAxML version 8: a tool for phylogenetic analysis and post-analysis of large phylogenies", weight: 650.356, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000336095100024"},
+                {text: "MEGA5: Molecular Evolutionary Genetics Analysis Using Maximum Likelihood, Evolutionary Distance, and Maximum Parsimony Methods", weight: 636.935, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000295184200003"},
+                {text: "IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in the Genomic Era", weight: 549.458, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000537426600023"},
+                {text: "IQ-TREE: A Fast and Effective Stochastic Algorithm for Estimating Maximum-Likelihood Phylogenies", weight: 401.311, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000350050200025"},
+                {text: "MAFFT Multiple Sequence Alignment Software Version 7: Improvements in Performance and Usability", weight: 368.149, url: "https://www.webofscience.com/api/gateway?GWVersion=2&SrcAuth=InCites&SrcApp=tsm_test&DestApp=WOS_CPL&DestLinkType=FullRecord&KeyUT=ISI:000317002300004"}
+            ];
+
+            // Normalize weights
+            var minWeight = d3.min(words, d => d.weight);
+            var maxWeight = d3.max(words, d => d.weight);
+            words.forEach(d => {
+                d.weight = ((d.weight - minWeight) / (maxWeight - minWeight)) * 5 + 1; // Normalized to 1-10
+            });
+
+            var layout = d3.layout.cloud()
+                .size([1600, 800])
+                .words(words.map(function(d) {
+                    return {text: d.text, size: d.weight * 10, url: d.url}; // Scaling normalized weight to font size
+                }))
+                .padding(2)
+                .rotate(function() { return 0; })
+                .spiral("archimedean")
+                .font("Impact")
+                .fontSize(function(d) { return d.size; })
+                .on("end", draw);
+            layout.start();
+
+            function draw(words) {
+                var svg = d3.select("#word-cloud").append("svg")
+                    .attr("width", layout.size()[0])
+                    .attr("height", layout.size()[1])
+                    .append("g")
+                    .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")");
+                
+                svg.selectAll("text")
+                    .data(words)
+                    .enter().append("text")
+                    .style("font-size", function(d) { return d.size + "px"; })
+                    .style("font-family", "Impact")
+                    .attr("text-anchor", "middle")
+                    .attr("transform", function(d) {
+                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .text(function(d) { return d.text; })
+                    .on("click", function(d) { window.open(d.url); })
+                    .style("cursor", "pointer");
+            }
+        });
+    </script>
+</body>
+</html>
