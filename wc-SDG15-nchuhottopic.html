@@ -26,32 +26,32 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var words = [
-                {text: "Entomology", weight: 3.32, url: "https://www.webofscience.com/wos/woscc/summary/e7434425-00e6-48ef-b4ec-b27f5ccc4c9e-e86da902/relevance/1"},
-                {text: "Marine Biology", weight: 3.2, url: "https://www.webofscience.com/wos/woscc/summary/05dbd370-e509-48df-b9ab-06950b859ad3-e86d334d/relevance/1"},
-                {text: "Bioengineering", weight: 3.83, url: "https://www.webofscience.com/wos/woscc/summary/1d9052fd-6331-4d41-aa49-9f7b0a22385d-e86db10d/relevance/1"},
-                {text: "Crop Science", weight: 3.4, url: "https://www.webofscience.com/wos/woscc/summary/66f04273-50d7-4803-9384-9b0a8ace6157-e86db6a0/relevance/1"},
-                {text: "Phylogenetics & Genomics", weight: 3.64, url: "https://www.webofscience.com/wos/woscc/summary/9e71ecf8-e7da-41e5-9662-364f920a180b-e86dbcee/relevance/1"},
-                {text: "Forestry", weight: 3.40, url: "https://www.webofscience.com/wos/woscc/summary/3765900d-2afd-44ca-a9f7-adf8d6cf69e7-e86dc137/relevance/1"},
-                {text: "Zoology & Animal Ecology", weight: 3.35, url: "https://www.webofscience.com/wos/woscc/summary/d0e61309-5b6d-4034-88ba-41b8fc99954f-e86dc553/relevance/1"},
-                {text: "Remote Sensing", weight: 4.169, url: "https://www.webofscience.com/wos/woscc/summary/5c64a56e-8433-437a-9ba1-2f805165a8b8-e86dcb9b/relevance/1"},
-                {text: "Soil Science", weight: 3.45, url: "https://www.webofscience.com/wos/woscc/summary/4557e168-a34c-49a3-acc5-900fd8bee0db-e86dcfd7/relevance/1"},
-                {text: "Plant Pathology", weight: 3.97, url: "https://www.webofscience.com/wos/woscc/summary/d2ed9b59-8b86-4ae2-bfc2-a1310485ff1c-e86dd37d/relevance/1"},
-                {text: "Chromosome Disorders", weight: 1.186, url: "https://www.webofscience.com/wos/woscc/summary/3f628852-9506-4b7e-8458-194c79e3bbb3-e86dd79e/relevance/1"},
-                {text: "Animal Sensing", weight: 3.274, url: "https://www.webofscience.com/wos/woscc/summary/aec77b91-8965-4d0a-bfbe-c437c46589ba-e86ddb4a/relevance/1"},
-                {text: "Crop Protection", weight: 3.275, url: "https://www.webofscience.com/wos/woscc/summary/df3ad5c2-3961-4324-b574-3263cd64ca60-e86ddf59/relevance/1"},
-                {text: "Paleontology", weight: 8.305, url: "https://www.webofscience.com/wos/woscc/summary/fd50aad4-e13a-408a-b83f-c3b40714eaeb-e86de3c4/relevance/1"},
-                {text: "Sustainability Science", weight: 6.115, url: "https://www.webofscience.com/wos/woscc/summary/3fa614f7-c300-4026-b80a-5243a75719d4-e86de744/relevance/1"},
-                {text: "Ocean Dynamics", weight: 8.205, url: "https://www.webofscience.com/wos/woscc/summary/e66eb9d0-d7b8-4663-89ef-3d46141fbe3a-e86deb30/relevance/1"},
-                {text: "Phytochemicals", weight: 3.16, url: "https://www.webofscience.com/wos/woscc/summary/ad8c41cd-7513-4a4b-a3b1-21d377610673-e86def86/relevance/1"},
-                {text: "Medical Mycology", weight: 1.148, url: "https://www.webofscience.com/wos/woscc/summary/61b53c00-a9c9-438f-a208-8ef5a32feb63-e86df2f6/relevance/1"},
-                {text: "Geochemistry, Geophysics & Geology", weight: 8.8, url: "https://www.webofscience.com/wos/woscc/summary/6cbfe541-115d-4f2b-9c55-c6a9c0161a21-e86df6c1/relevance/1"},
-                {text: "Archaeology", weight: 8.93, url: "https://www.webofscience.com/wos/woscc/summary/c0f66334-4736-4a5c-a13b-4de69972b92d-e86dfd93/relevance/1"}
+                {text: "Entomology", weight: 2.452, url: "https://www.webofscience.com/wos/woscc/summary/e7434425-00e6-48ef-b4ec-b27f5ccc4c9e-e86da902/relevance/1"},
+                {text: "Marine Biology", weight: 2.428, url: "https://www.webofscience.com/wos/woscc/summary/05dbd370-e509-48df-b9ab-06950b859ad3-e86d334d/relevance/1"},
+                {text: "Bioengineering", weight: 2.35, url: "https://www.webofscience.com/wos/woscc/summary/1d9052fd-6331-4d41-aa49-9f7b0a22385d-e86db10d/relevance/1"},
+                {text: "Crop Science", weight: 2.348, url: "https://www.webofscience.com/wos/woscc/summary/66f04273-50d7-4803-9384-9b0a8ace6157-e86db6a0/relevance/1"},
+                {text: "Phylogenetics & Genomics", weight: 2.318, url: "https://www.webofscience.com/wos/woscc/summary/9e71ecf8-e7da-41e5-9662-364f920a180b-e86dbcee/relevance/1"},
+                {text: "Forestry", weight: 2.297, url: "https://www.webofscience.com/wos/woscc/summary/3765900d-2afd-44ca-a9f7-adf8d6cf69e7-e86dc137/relevance/1"},
+                {text: "Zoology & Animal Ecology", weight: 2.057, url: "https://www.webofscience.com/wos/woscc/summary/d0e61309-5b6d-4034-88ba-41b8fc99954f-e86dc553/relevance/1"},
+                {text: "Remote Sensing", weight: 2.041, url: "https://www.webofscience.com/wos/woscc/summary/5c64a56e-8433-437a-9ba1-2f805165a8b8-e86dcb9b/relevance/1"},
+                {text: "Soil Science", weight: 1.681, url: "https://www.webofscience.com/wos/woscc/summary/4557e168-a34c-49a3-acc5-900fd8bee0db-e86dcfd7/relevance/1"},
+                {text: "Plant Pathology", weight: 1.602, url: "https://www.webofscience.com/wos/woscc/summary/d2ed9b59-8b86-4ae2-bfc2-a1310485ff1c-e86dd37d/relevance/1"},
+                {text: "Chromosome Disorders", weight: 1.342, url: "https://www.webofscience.com/wos/woscc/summary/3f628852-9506-4b7e-8458-194c79e3bbb3-e86dd79e/relevance/1"},
+                {text: "Animal Sensing", weight: 1.23, url: "https://www.webofscience.com/wos/woscc/summary/aec77b91-8965-4d0a-bfbe-c437c46589ba-e86ddb4a/relevance/1"},
+                {text: "Crop Protection", weight: 1.146, url: "https://www.webofscience.com/wos/woscc/summary/df3ad5c2-3961-4324-b574-3263cd64ca60-e86ddf59/relevance/1"},
+                {text: "Paleontology", weight: 1.114, url: "https://www.webofscience.com/wos/woscc/summary/fd50aad4-e13a-408a-b83f-c3b40714eaeb-e86de3c4/relevance/1"},
+                {text: "Sustainability Science", weight: 0.954, url: "https://www.webofscience.com/wos/woscc/summary/3fa614f7-c300-4026-b80a-5243a75719d4-e86de744/relevance/1"},
+                {text: "Ocean Dynamics", weight: 0.778, url: "https://www.webofscience.com/wos/woscc/summary/e66eb9d0-d7b8-4663-89ef-3d46141fbe3a-e86deb30/relevance/1"},
+                {text: "Phytochemicals", weight: 0.477, url: "https://www.webofscience.com/wos/woscc/summary/ad8c41cd-7513-4a4b-a3b1-21d377610673-e86def86/relevance/1"},
+                {text: "Medical Mycology", weight: 0.301, url: "https://www.webofscience.com/wos/woscc/summary/61b53c00-a9c9-438f-a208-8ef5a32feb63-e86df2f6/relevance/1"},
+                {text: "Geochemistry, Geophysics & Geology", weight: 0.301, url: "https://www.webofscience.com/wos/woscc/summary/6cbfe541-115d-4f2b-9c55-c6a9c0161a21-e86df6c1/relevance/1"},
+                {text: "Archaeology", weight: 0.301, url: "https://www.webofscience.com/wos/woscc/summary/c0f66334-4736-4a5c-a13b-4de69972b92d-e86dfd93/relevance/1"}
             ];
 
             var fontSizeScale = d3.scaleLinear().domain([1, 10]).range([10, 50]);
 
             var layout = d3.layout.cloud()
-                .size([1200, 600])
+                .size([800, 400])
                 .words(words.map(function(d) {
                     return {text: d.text, size: fontSizeScale(d.weight), url: d.url};
                 }))
