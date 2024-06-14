@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中學館搜尋</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #eef;
+            background-image: url('background-sh.jpg'); /* 预留背景图片空间 */
+            background-size: cover;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>中學館搜尋</h1>
+        <input type="text" id="unrestrictedSearch" placeholder="輸入搜尋關鍵字">
+        <button onclick="search()">開始搜尋！</button>
+    </div>
+
+    <script>
+        function search() {
+            var baseUrl = 'https://koha.sydt.com.tw/cgi-bin/koha/opac-search.pl?idx=&q=';
+            var keyword = document.getElementById('unrestrictedSearch').value;
+            var url = baseUrl + keyword + '&limit=&weight_search=1';
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
