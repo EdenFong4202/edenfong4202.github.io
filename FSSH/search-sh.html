@@ -56,7 +56,7 @@
         function search() {
             var baseUrl = 'https://koha.sydt.com.tw/cgi-bin/koha/opac-search.pl?idx=&q=';
             var keyword = document.getElementById('unrestrictedSearch').value;
-            var url = baseUrl + keyword + '&limit=&weight_search=1';
+            var url = baseUrl + keyword + '&limit=branch%3ASS&weight_search=1';
             window.location.href = url;
         }
     </script>
