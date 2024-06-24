@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>中學部圖書搜尋</title>
+<title>復興中學-小學部圖書搜尋</title>
 <style>
   body, html {
     margin: 0;
@@ -11,8 +11,8 @@
     width: 100%;
     height: 100%;
     font-family: Arial, sans-serif;
-    background-color: #000;
-    background-image: url('img/img-sh-background.jpg'); 
+    background-color: #e0f7fa;
+    background-image: url('img/img-es-background.jpg'); 
     background-size: cover;
     background-position: center;
     display: flex;
@@ -33,7 +33,7 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
-    margin: 0;
+    margin-bottom: 20px;
     font-size: 16px;
   }
   button {
@@ -54,14 +54,14 @@
 <body>
 <div class="search-container">
   <input type="text" id="primarySearch" placeholder="請輸入關鍵字">
-  <button onclick="search()">搜尋</button>
+  <button onclick="search('primary')">搜尋</button>
 </div>
 
 <script>
 function search() {
   var baseUrl = 'http://koha.fhjh.tp.edu.tw/cgi-bin/koha/opac-search.pl?idx=&q=';
   var keyword = document.getElementById('primarySearch').value;
-  var url = baseUrl + keyword + '&limit=branch%3AFHJHJLIB&weight_search=1';
+  var url = baseUrl + keyword + '&limit=branch%3AFHJHPLIB&weight_search=1';
 
   window.location.href = url;
 }
